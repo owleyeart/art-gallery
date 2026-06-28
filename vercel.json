@@ -4,10 +4,7 @@
       "root": "frontend",
       "routePrefix": "/",
       "framework": "vite",
-      "buildCommand": "npm install && npm run build",
-      "rewrites": [
-        { "source": "/((?!api/.*).*)", "destination": "/index.html" }
-      ]
+      "buildCommand": "npm install && npm run build"
     }
   }
 }
