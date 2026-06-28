@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default CSS variables — overridden by site_config at runtime */
+:root {
+  --color-primary: #2d2d2d;
+  --color-secondary: #6b4c8a;
+  --color-accent: #c9a84c;
+  --color-surface: #fafafa;
+  --color-on-primary: #ffffff;
+  --font-heading: 'Georgia', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
