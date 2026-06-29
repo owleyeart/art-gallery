@@ -75,6 +75,14 @@ export default function AdminDocuments() {
     loadDocs()
   }
 
+  async function openDoc(storagePath) {
+    const { data, error } = await supabase.storage
+      .from('documents')
+      .createSignedUrl(storagePath, 60) // 60-second expiry
+    if (error) { alert('Could not open file: ' + error.message); return }
+    window.open(data.signedUrl, '_blank', 'noopener,noreferrer')
+  }
+
   const filtered = filter === 'all' ? docs : docs.filter(d => d.category === filter)
 
   return (
@@ -144,9 +152,7 @@ export default function AdminDocuments() {
                   <td className="px-4 py-3 text-gray-400">{format(new Date(doc.created_at), 'MMM d, yyyy')}</td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-2">
-                      <a href={doc.storage_url} target="_blank" rel="noopener noreferrer">
-                        <AdminButton size="sm" variant="ghost">Open</AdminButton>
-                      </a>
+                      <AdminButton size="sm" variant="ghost" onClick={() => openDoc(doc.storage_path)}>Open</AdminButton>
                       <AdminButton size="sm" variant="danger" onClick={() => setDeleteTarget(doc.id)}>Delete</AdminButton>
                     </div>
                   </td>
