@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 import AdminButton from '../../components/admin/AdminButton.jsx'
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx'
+import DocumentViewer from '../../components/admin/DocumentViewer.jsx'
 import FormField, { Input, Select } from '../../components/admin/FormField.jsx'
 import { format } from 'date-fns'
 
@@ -29,6 +30,7 @@ export default function AdminDocuments() {
   const [docs, setDocs] = useState([])
   const [uploading, setUploading] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
+  const [viewingDoc, setViewingDoc] = useState(null)
   const [category, setCategory] = useState('general')
   const [filter, setFilter] = useState('all')
   const [error, setError] = useState(null)
@@ -75,12 +77,8 @@ export default function AdminDocuments() {
     loadDocs()
   }
 
-  async function openDoc(storagePath) {
-    const { data, error } = await supabase.storage
-      .from('documents')
-      .createSignedUrl(storagePath, 60) // 60-second expiry
-    if (error) { alert('Could not open file: ' + error.message); return }
-    window.open(data.signedUrl, '_blank', 'noopener,noreferrer')
+  function openDoc(doc) {
+    setViewingDoc(doc)
   }
 
   const filtered = filter === 'all' ? docs : docs.filter(d => d.category === filter)
@@ -152,7 +150,7 @@ export default function AdminDocuments() {
                   <td className="px-4 py-3 text-gray-400">{format(new Date(doc.created_at), 'MMM d, yyyy')}</td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-2">
-                      <AdminButton size="sm" variant="ghost" onClick={() => openDoc(doc.storage_path)}>Open</AdminButton>
+                      <AdminButton size="sm" variant="ghost" onClick={() => openDoc(doc)}>Open</AdminButton>
                       <AdminButton size="sm" variant="danger" onClick={() => setDeleteTarget(doc.id)}>Delete</AdminButton>
                     </div>
                   </td>
@@ -169,6 +167,10 @@ export default function AdminDocuments() {
         onConfirm={handleDelete}
         onCancel={() => setDeleteTarget(null)}
       />
+
+      {viewingDoc && (
+        <DocumentViewer doc={viewingDoc} onClose={() => setViewingDoc(null)} />
+      )}
     </div>
   )
 }
