@@ -16,9 +16,10 @@ const ICONS = {
   default: '📁',
 }
 
-function fileIcon(type = '') {
+function fileIcon(type) {
+  const t = type || ''
   for (const [key, icon] of Object.entries(ICONS)) {
-    if (key !== 'default' && type.startsWith(key)) return icon
+    if (key !== 'default' && t.startsWith(key)) return icon
   }
   return ICONS.default
 }
@@ -56,6 +57,7 @@ export default function AdminDocuments() {
         category,
         storage_path: path,
         storage_url: urlData.publicUrl,
+        file_type: file.type || null,
         uploaded_by: user?.id,
       })
     }
