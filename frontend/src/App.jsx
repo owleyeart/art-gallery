@@ -12,6 +12,9 @@ import AdminEvents from './pages/admin/EventsAdmin.jsx'
 import AdminSiteConfig from './pages/admin/SiteConfig.jsx'
 import AdminFeaturedArtist from './pages/admin/FeaturedArtist.jsx'
 import AdminDocuments from './pages/admin/Documents.jsx'
+import AdminNewsletter from './pages/admin/Newsletter.jsx'
+import AdminUsers from './pages/admin/AdminUsers.jsx'
+import MemberRoster from './pages/admin/MemberRoster.jsx'
 import Login from './pages/Login.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
@@ -40,6 +43,9 @@ export default function App() {
           <Route path="featured" element={<AdminFeaturedArtist />} />
           <Route path="site-config" element={<AdminSiteConfig />} />
           <Route path="documents" element={<AdminDocuments />} />
+          <Route path="newsletter" element={<AdminNewsletter />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="roster" element={<MemberRoster />} />
         </Route>
       </Routes>
     </AuthProvider>

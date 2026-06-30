@@ -65,7 +65,7 @@ export default function AdminDashboard() {
         <StatCard label="Active Artists" value={stats.activeArtists} sub={`${stats.artistCount} total`} to="/admin/artists" />
         <StatCard label="Artworks" value={stats.artworkCount} to="/admin/artists" />
         <StatCard label="Upcoming Events" value={stats.eventCount} to="/admin/events" />
-        <StatCard label="Newsletter Subscribers" value={stats.subscriberCount} />
+        <StatCard label="Newsletter Subscribers" value={stats.subscriberCount} to="/admin/newsletter" />
       </div>
 
       {/* Upcoming events */}
@@ -92,6 +92,8 @@ export default function AdminDashboard() {
       {/* Quick links */}
       <div className="grid sm:grid-cols-3 gap-4">
         {[
+          { to: '/admin/newsletter', label: 'Newsletter', icon: '✉️' },
+          { to: '/admin/roster', label: 'Member Roster', icon: '📋' },
           { to: '/admin/featured', label: 'Set Featured Artist', icon: '⭐' },
           { to: '/admin/site-config', label: 'Site Settings', icon: '⚙️' },
           { to: '/admin/documents', label: 'Documents', icon: '📁' },
